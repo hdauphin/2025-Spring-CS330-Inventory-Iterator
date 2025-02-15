@@ -1,9 +1,8 @@
 package items;
 
-import java.util.List;
 import java.util.ArrayList;
-
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,9 +27,11 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
      * @param lhs stack whose size will be increased
      * @param rhs stack whose size we need to examine
      */
-    public static void mergeStacks(ItemStack lhs, ItemStack rhs)
+    public static void mergeStacks(ItemStack lhs, ItemStack rhs)              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         // Refer to the notes from Assignment 1
+
+        lhs.addItems(rhs.size());
     }
 
     /**
@@ -92,10 +93,10 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
      *
      * @return true if the current size is equal to capacity
      */
-    public boolean isFull()
+    public boolean isFull()                                               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         // Replace the next line
-        return false;
+        return this.utilizedSlots() >= this.capacity;
     }
 
     /**
@@ -116,10 +117,14 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
      *
      * @return matching stack if one was found and `null` otherwise
      */
-    public ItemStack findMatchingItemStack(ItemStack key)
+    public ItemStack findMatchingItemStack(ItemStack key)                   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         // Adapt the logic from Assignment 1
-
+        for (ItemStack k : this){
+            if (k!= null && k.equals(key)){
+                return k;
+            }
+        }
         return null;
     }
 
@@ -128,9 +133,10 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
      *
      * @param toAdd data that we want to store in a Node and add to the list
      */
-    public void addItemStackNoCheck(ItemStack toAdd)
+    public void addItemStackNoCheck(ItemStack toAdd)                        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         // Add the missing (one) line by using `this.slots.add(????)`
+        this.slots.add(toAdd);
     }
 
     /**
@@ -163,11 +169,12 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
     }
 
     @Override
-    public Inventory clone()
+    public Inventory clone()                                                // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         Inventory copy = new Inventory(this.totalSlots());
 
         // Add the missing copy logic (loop)
+        
 
         return copy;
     }
@@ -205,7 +212,7 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
      * *Print* a Summary of the Inventory and all Items contained within.
      */
     @Override
-    public String toString()
+    public String toString()                                                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         String summaryLine = String.format(
             " -Used %d of %d slots%n", this.utilizedSlots(), this.totalSlots()
@@ -215,6 +222,14 @@ public class Inventory implements Iterable<ItemStack>, Cloneable
         strBld.append(summaryLine);
 
         // Add the missing loop
+
+        // for each loop; for each non-null i, write the line 
+        for (ItemStack i : this){
+            if (i!=null){
+                String itemLine = String.format("  %s%n", i);
+                strBld.append(itemLine);
+            }
+        }
 
         return strBld.toString();
     }
